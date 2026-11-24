@@ -1,0 +1,179 @@
+/* ─── Design Tokens ─── */
+:root {
+  --color-bg: #FDF6E3;
+  --color-bg-warm: #FAF3E0;
+  --color-dark: #1A1A2E;
+  --color-dark-soft: #2D3047;
+  --color-vermillion: #D62839;
+  --color-vermillion-light: #E63946;
+  --color-gold: #C9A962;
+  --color-ink: #4A3B28;
+  --scroll-duration: 1.2s;
+}
+
+/* ─── Smooth Scrolling ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ─── Base ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--color-bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography Utilities ─── */
+.font-display { font-family: 'Staatliches', cursive; letter-spacing: 0.1em; }
+.font-serif { font-family: 'Playfair Display', serif; }
+.font-jp { font-family: 'Noto Serif JP', serif; }
+
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* ─── Textures & Overlays ─── */
+.paper-texture {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+}
+
+.grain {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ─── Editorial Shadow ─── */
+.editorial-shadow {
+  box-shadow:
+    0 4px 6px -1px rgba(26, 26, 46, 0.06),
+    0 20px 40px -8px rgba(26, 26, 46, 0.12),
+    0 0 0 1px rgba(26, 26, 46, 0.04);
+  transition: box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-shadow:hover {
+  box-shadow:
+    0 8px 12px -2px rgba(26, 26, 46, 0.08),
+    0 32px 64px -12px rgba(26, 26, 46, 0.18),
+    0 0 0 1px rgba(214, 40, 57, 0.08);
+  transform: translateY(-4px);
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: var(--color-vermillion);
+  color: white;
+}
+
+/* ─── Scroll Indicator Animation ─── */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(12px); opacity: 1; }
+}
+
+.scroll-indicator {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* ─── Fade-in on scroll helper ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Neon speed lines ─── */
+@keyframes neonScroll {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+/* ─── Horizontal scroll container (desktop) ─── */
+.horizontal-container {
+  display: flex;
+  width: fit-content;
+  height: 100vh;
+}
+
+.horizontal-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+/* ─── Responsive text clamp utilities ─── */
+.text-hero {
+  font-size: clamp(3.5rem, 18vw, 14rem);
+}
+
+.text-display-lg {
+  font-size: clamp(3rem, 10vw, 8rem);
+}
+
+.text-display-xl {
+  font-size: clamp(4rem, 12vw, 12rem);
+}
+
+/* ─── Mobile city cards (vertical fallback) ─── */
+.city-card-mobile {
+  scroll-snap-align: start;
+}
+
+.cities-mobile-scroll {
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Focus styles for accessibility ─── */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-vermillion);
+  outline-offset: 3px;
+}
